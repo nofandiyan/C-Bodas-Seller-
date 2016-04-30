@@ -14,7 +14,7 @@ class CreateProdukTaniTable extends Migration
     {
         Schema::create('produkTani', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('idMerchant');
+            $table->integer('idMerchant',10)->unsigned();
             $table->string('title');
             $table->string('desc');
             $table->string('stock');

@@ -15,10 +15,10 @@ class sellerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $profile = User::all();
-        return view ('seller.sellerProfile', ['profile'=>$profile]);
+        $profile = User::find($id);
+        return view ('seller.sellerEdit', ['profile'=>$profile]);
     }
 
     /**
@@ -61,7 +61,11 @@ class sellerController extends Controller
      */
     public function edit($id)
     {
-        
+        $profile = User::find($id);
+        if(!$profile){
+            abort(404);
+        }
+        return view('seller.sellerEdit')->with('profile', $profile);
     }
 
     /**
@@ -73,7 +77,37 @@ class sellerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'userAs'    => $data['userAs'],
+            'email'     => $data['email'],
+            'profPict'  => $data['profPict'],
+            'password'  => bcrypt($data['password']),
+            'typeId'    => $data['typeId'],
+            'noId'      => $data['noId'],
+            'name'      => $data['name'],
+            'telp'      => $data['telp'],
+            'street'    => $data['street'],
+            'city'      => $data['city'],
+            'prov'      => $data['prov'],
+            'zipCode'   => $data['zipCode'],
+            'bankName'  => $data['bankName'],
+            'rekName'   => $data['rekName'],
+            'rekId'     => $data['rekId'],
+        ]);
+
+        $data = UserModel::find($id);
+        $data->title = $request->title;
+        $data->desc = $request->desc;
+        $data->year = $request->year;
+        $data->month = $request->month;
+        $data->day = $request->day;
+        $data->gender = $request->gender;
+        $data->weight = $request->weight;
+        $data->price = $request->price;
+
+        $data->save();
+
+        return redirect('/');
     }
 
     /**

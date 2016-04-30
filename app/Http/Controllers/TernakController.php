@@ -17,8 +17,8 @@ class TernakController extends Controller
      */
     public function index()
     {
-        // $ternak = TernakModel::all();
-        // return view ('products.product', ['ternak'=>$ternak]);
+        $ternak = TernakModel::all();
+        return view ('products.list.listTernak', ['ternak'=>$ternak]);
     }
 
     /**
@@ -28,7 +28,7 @@ class TernakController extends Controller
      */
     public function create()
     {
-        return view ('products.createTernak');
+        return view ('products.create.createTernak');
     }
 
     /**
@@ -41,13 +41,13 @@ class TernakController extends Controller
     {
 
         $this->validate($request, [
-            'title'     => 'max:255|min:15',
-            'desc'      => 'required|max:255|min:15',
-            'year'      => 'required|max:255',
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'year'      => 'required',
             'month'     => 'required',
             'day'       => 'required',
             'gender'    => 'required',
-            'weight'    => 'required|min:1',
+            'weight'    => 'required',
             'price'     => 'required',
         ]);
 
@@ -64,7 +64,7 @@ class TernakController extends Controller
 
         $ternak->save();
 
-        return view ('seller.sellerHome');
+        return redirect('/');
     }
 
     /**
@@ -75,7 +75,11 @@ class TernakController extends Controller
      */
     public function show($id)
     {
-        //
+        $ternak = TernakModel::find($id);
+        if(!$ternak){
+            abort(404);
+        }
+        return view('products.view.viewTernak')->with('ternak', $ternak);
     }
 
     /**
@@ -86,7 +90,11 @@ class TernakController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ternak = TernakModel::find($id);
+        if(!$ternak){
+            abort(404);
+        }
+        return view('products.edit.editTernak')->with('ternak', $ternak);
     }
 
     /**
@@ -98,7 +106,31 @@ class TernakController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'year'      => 'required',
+            'month'     => 'required',
+            'day'       => 'required',
+            'gender'    => 'required',
+            'weight'    => 'required',
+            'price'     => 'required',
+        ]);
+
+        $ternak = TernakModel::find($id);
+        $ternak->idMerchant = $request->idMerchant;
+        $ternak->title = $request->title;
+        $ternak->desc = $request->desc;
+        $ternak->year = $request->year;
+        $ternak->month = $request->month;
+        $ternak->day = $request->day;
+        $ternak->gender = $request->gender;
+        $ternak->weight = $request->weight;
+        $ternak->price = $request->price;
+
+        $ternak->save();
+
+        return redirect('/');
     }
 
     /**

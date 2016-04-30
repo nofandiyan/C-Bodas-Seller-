@@ -17,8 +17,8 @@ class WisataController extends Controller
      */
     public function index()
     {
-        // $wisata = WisataModel::all();
-        // return view ('merchant.product', ['wisata'=>$wisata]);
+        $wisata = WisataModel::all();
+        return view ('products.list.listWisata', ['wisata'=>$wisata]);
     }
 
     /**
@@ -28,7 +28,7 @@ class WisataController extends Controller
      */
     public function create()
     {
-        return view ('products.createWisata');
+        return view ('products.create.createWisata');
     }
 
     /**
@@ -41,9 +41,9 @@ class WisataController extends Controller
     {
 
         $this->validate($request, [
-            'title'         => 'max:255|min:15',
-            'desc'          => 'required|max:255|min:15',
-            'street'        => 'required|max:255',
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'street'        => 'required',
             'village'       => 'required',
             'city'          => 'required',
             'prov'          => 'required',
@@ -66,7 +66,7 @@ class WisataController extends Controller
 
         $wisata->save();
 
-        return view ('seller.sellerHome');
+        return view ('products.list.listWisata');
     }
 
     /**
@@ -77,7 +77,11 @@ class WisataController extends Controller
      */
     public function show($id)
     {
-        //
+        $wisata = WisataModel::find($id);
+        if(!$wisata){
+            abort(404);
+        }
+        return view('products.view.viewWisata')->with('wisata', $wisata);
     }
 
     /**
@@ -88,7 +92,11 @@ class WisataController extends Controller
      */
     public function edit($id)
     {
-        //
+        $wisata = WisataModel::find($id);
+        if(!$wisata){
+            abort(404);
+        }
+        return view('products.edit.editWisata')->with('wisata', $wisata);
     }
 
     /**
@@ -100,7 +108,33 @@ class WisataController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'street'        => 'required',
+            'village'       => 'required',
+            'city'          => 'required',
+            'prov'          => 'required',
+            'zipCode'       => 'required|min:5|max:5',
+            'ticketStock'   => 'required|min:1',
+            'price'         => 'required',
+        ]);
+
+        $wisata = WisataModel::find($id);
+        $wisata->idMerchant = $request->idMerchant;
+        $wisata->title = $request->title;
+        $wisata->desc = $request->desc;
+        $wisata->street = $request->street;
+        $wisata->village = $request->village;
+        $wisata->city = $request->city;
+        $wisata->prov = $request->prov;
+        $wisata->zipCode = $request->zipCode;
+        $wisata->ticketStock = $request->ticketStock;
+        $wisata->price = $request->price;
+
+        $wisata->save();
+
+        return view ('products.list.listWisata');
     }
 
     /**

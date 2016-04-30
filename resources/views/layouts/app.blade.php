@@ -21,6 +21,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>   -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    
 
     <style>
         body {
@@ -76,18 +77,10 @@
                     <ul class="nav navbar-nav navbar-right">
                     @if (Auth::user()->userAs == 1)
                         <li class="dropdown">
-                            <a href="{{ url('merchant/product') }}">
-                                Lapak
-                            </a>
-                        </li>
-                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('user/profile') }}">
-                                    <i class="fa fa-btn fa-user"></i>Lihat Profil</a>
-                                </li>
                                 <li><a href="{{ url('/logout') }}">
                                     <i class="fa fa-btn fa-sign-out"></i>Logout</a>
                                 </li>
@@ -99,9 +92,6 @@
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('user/profile') }}">
-                                    <i class="fa fa-btn fa-user"></i>Lihat Profil</a>
-                                </li>
                                 <li><a href="{{ url('/logout') }}">
                                     <i class="fa fa-btn fa-sign-out"></i>Logout</a>
                                 </li>

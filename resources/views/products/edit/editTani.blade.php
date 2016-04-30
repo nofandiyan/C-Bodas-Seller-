@@ -40,18 +40,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkTani') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="/produkTani/{{$tani->id}}">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                        <input type="hidden" name="_method" value="put">
                         <input type="hidden" name='idMerchant' value="{{Auth::user()->id}}">
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Judul</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="title" value="{{ old('title') }}">
+                                <input type="text" class="form-control" name="title" value="{{ $tani->title }}">
 
                                 @if ($errors->has('title'))
                                     <span class="help-block">
@@ -66,7 +66,7 @@
 
                             <div class="col-md-6">
                                 <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
-                                <textarea class="form-control" name="desc" value="{{ old('desc') }}"></textarea> 
+                                <textarea class="form-control" name="desc">{{ $tani->desc }}</textarea> 
 
                                 @if ($errors->has('desc'))
                                     <span class="help-block">
@@ -82,7 +82,7 @@
 
                                 <div class="col-md-4">
                                     <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
-                                    <input type="number" class="form-control" name="stock" step="1">
+                                    <input type="number" class="form-control" name="stock" step="1" value="{{ $tani->stock }}">
 
                                     @if ($errors->has('stock'))
                                         <span class="help-block">
@@ -93,11 +93,11 @@
 
                                 <div class="col-md-3">
                                     <select class="form-control" name="massStock" id="massStock">
-                                        <option value="Gram">Gram</option>
-                                        <option value="Ons">Ons</option>
-                                        <option value="Kilogram">Kilogram</option>
-                                        <option value="Kwintal">Kwintal</option>
-                                        <option value="Ton">Ton</option>
+                                        <option <?php if($tani->massStock=="Gram") echo 'selected'; ?> value="Gram">Gram</option>
+                                        <option <?php if($tani->massStock=="Ons") echo 'selected'; ?> value="Ons">Ons</option>
+                                        <option <?php if($tani->massStock=="Kilogram") echo 'selected'; ?> value="Kilogram">Kilogram</option>
+                                        <option <?php if($tani->massStock=="Kwintal") echo 'selected'; ?> value="Kwintal">Kwintal</option>
+                                        <option <?php if($tani->massStock=="Ton") echo 'selected'; ?> value="Ton">Ton</option>
                                     </select>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
 
                                 <div class="col-md-4">
                                     <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
-                                    <input type="number" class="form-control" name="price" step="50">
+                                    <input type="number" class="form-control" name="price" step="50" value="{{ $tani->price }}">
 
                                     @if ($errors->has('price'))
                                         <span class="help-block">
@@ -117,12 +117,12 @@
                                 </div>
                                 <label class="col-md-1 control-label">Per</label>
                                 <div class="col-md-3">
-                                    <select class="form-control" name="massSell" id="massSell">
-                                        <<option value="Gram">Gram</option>
-                                        <option value="Ons">Ons</option>
-                                        <option value="Kilogram">Kilogram</option>
-                                        <option value="Kwintal">Kwintal</option>
-                                        <option value="Ton">Ton</option>
+                                    <select class="form-control" name="massSell" id="massSell" value="{{ $tani->massSell }}">
+                                        <option <?php if($tani->massSell=="Gram") echo 'selected'; ?> value="Gram">Gram</option>
+                                        <option <?php if($tani->massSell=="Ons") echo 'selected'; ?> value="Ons">Ons</option>
+                                        <option <?php if($tani->massSell=="Kilogram") echo 'selected'; ?> value="Kilogram">Kilogram</option>
+                                        <option <?php if($tani->massSell=="Kwintal") echo 'selected'; ?> value="Kwintal">Kwintal</option>
+                                        <option <?php if($tani->massSell=="Ton") echo 'selected'; ?> value="Ton">Ton</option>
                                     </select>
                                 </div>
                             </div>

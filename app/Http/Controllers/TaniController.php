@@ -8,8 +8,15 @@ use App\Http\Requests;
 
 use App\TaniModel;
 
+use Validator;
+
 class TaniController extends Controller
 {
+public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +24,8 @@ class TaniController extends Controller
      */
     public function index()
     {
-        // $tani = TaniModel::all();
-        // return view ('products.product', ['tani'=>$tani]);
+        $tani = TaniModel::all();
+        return view ('products.list.listTani', ['tani'=>$tani]);
     }
 
     /**
@@ -28,7 +35,7 @@ class TaniController extends Controller
      */
     public function create()
     {
-        return view ('products.createTani');
+        return view ('products.create.createTani');
     }
 
     /**
@@ -39,14 +46,20 @@ class TaniController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title'     => 'max:255|min:15',
-            'desc'      => 'required|max:255|min:15',
+        $validator= Validator::make($request->all(), [
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
             'stock'     => 'required|max:255|min:1',
             'massStock' => 'required',
             'price'     => 'required',
             'massSell'  => 'required',
         ]);
+        // dd($validator->errors());
+         if ($validator->fails()) {
+            return redirect('produkTani/create')
+                        ->withErrors($validator->errors())
+                        ->withInput($request->all());
+        }
 
         $tani = new TaniModel;
         $tani->idMerchant = $request->idMerchant;
@@ -59,7 +72,7 @@ class TaniController extends Controller
 
         $tani->save();
 
-        return view ('seller.sellerHome');
+        return redirect('/');
     }
 
     /**
@@ -70,7 +83,11 @@ class TaniController extends Controller
      */
     public function show($id)
     {
-        //
+        $tani = TaniModel::find($id);
+        if(!$tani){
+            abort(404);
+        }
+        return view('products.view.viewTani')->with('tani', $tani);
     }
 
     /**
@@ -81,7 +98,11 @@ class TaniController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tani = TaniModel::find($id);
+        if(!$tani){
+            abort(404);
+        }
+        return view('products.edit.editTani')->with('tani', $tani);
     }
 
     /**
@@ -93,7 +114,27 @@ class TaniController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'stock'     => 'required|max:255|min:1',
+            'massStock' => 'required',
+            'price'     => 'required',
+            'massSell'  => 'required',
+        ]);
+
+        $tani = TaniModel::find($id);
+        $tani->idMerchant = $request->idMerchant;
+        $tani->title = $request->title;
+        $tani->desc = $request->desc;
+        $tani->stock = $request->stock;
+        $tani->massStock = $request->massStock;
+        $tani->price = $request->price;
+        $tani->massSell = $request->massSell;
+
+        $tani->save();
+
+        return redirect('/');
     }
 
     /**

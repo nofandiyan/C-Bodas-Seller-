@@ -33,15 +33,6 @@
 @if (!empty(Auth::user()))
     @if(Auth::user()->userAs == 1)
                 
-@if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
 <div class="container">
     <div class="row">
@@ -49,18 +40,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkEdukasi') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="/produkWisata/{{$wisata->id}}">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                        <input type="hidden" name="_method" value="put">
                         <input type="hidden" name='idMerchant' value="{{Auth::user()->id}}">
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Judul</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="title" value="{{ old('title') }}">
+                                <input type="text" class="form-control" name="title" value="{{ $wisata->title }}">
 
                                 @if ($errors->has('title'))
                                     <span class="help-block">
@@ -75,7 +66,7 @@
 
                             <div class="col-md-6">
                                 <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
-                                <textarea class="form-control" name="desc" value="{{ old('desc') }}"></textarea> 
+                                <textarea class="form-control" name="desc">{{ $wisata->desc }}</textarea> 
 
                                 @if ($errors->has('desc'))
                                     <span class="help-block">
@@ -84,14 +75,14 @@
                                 @endif
                             </div>
                         </div>
-<!-- Edukasi -->
+                        <!-- </div> -->
+<!-- Wisata -->
                         <div class="col-md-9 col-md-offset-1">
-
                             <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Alamat</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="street" placeholder="Jalan + Nomor" value="{{ old('street') }}">
+                                    <input type="text" class="form-control" name="street" placeholder="Jalan + Nomor" value="{{ $wisata->street }}">
 
                                     @if ($errors->has('street'))
                                         <span class="help-block">
@@ -124,42 +115,17 @@
                                     <input type="text" class="form-control" name="zipCode" maxlength="5" value="40391" readonly="40391">
                                 </div>
                             </div>
+                            
+                            <div class="form-group{{ $errors->has('ticketStock') ? ' has-error' : '' }}">
+                                <label class="col-md-4 control-label">Jumlah Tiket</label>
 
-                            <div class="form-group{{ $errors->has('dateOrdered') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Tanggal Sudah Terpesan</label>
-                                
                                 <div class="col-md-4">
-                                    <input class="date form-control" type="text" name="dateOrdered">
-                                    <script type="text/javascript">  
-                                        $('.date').datepicker({
-                                            startDate: "today",
-                                            format: "dd/mm/yyyy",
-                                            clearBtn: true,
-                                            language: "id",
-                                            multidate: true,
-                                            forceParse: false,
-                                            todayHighlight: true,
-                                            datesDisabled: ['04/06/2016', '04/21/2016']  
-                                         });  
-                                    </script>  
+                                    <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
+                                    <input type="number" class="form-control" name="ticketStock" step="1" value="{{ $wisata->ticketStock }}">
 
-                                    @if ($errors->has('dateOrdered'))
+                                    @if ($errors->has('ticketStock'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('dateOrdered') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('quota') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Kuota</label>
-
-                                <div class="col-md-6">
-                                    <input type="number" class="form-control" name="quota" value="{{ old('quota') }}" min="0">
-
-                                    @if ($errors->has('quota'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('quota') }}</strong>
+                                            <strong>{{ $errors->first('ticketStock') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -170,17 +136,17 @@
 
                                 <div class="col-md-4">
                                     <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
-                                    <input type="number" class="form-control" name="price" step="50" min="0">
+                                    <input type="number" class="form-control" name="price" step="50" value="{{ $wisata->price }}">
 
-                                    @if ($errors->has('stock'))
+                                    @if ($errors->has('price'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('price') }}</strong>
                                         </span>
                                     @endif
                                 </div>
                             </div>
-
                         </div>
+
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

@@ -17,8 +17,8 @@ class EdukasiController extends Controller
      */
     public function index()
     {
-        // $edukasi = EdukasiModel::all();
-        // return view ('merchant.product', ['edukasi'=>$edukasi]);
+        $edukasi = EdukasiModel::all();
+        return view ('products.list.listEdukasi', ['edukasi'=>$edukasi]);
     }
 
     /**
@@ -28,7 +28,7 @@ class EdukasiController extends Controller
      */
     public function create()
     {
-        return view ('products.createEdukasi');
+        return view ('products.create.createEdukasi');
     }
 
     /**
@@ -41,9 +41,9 @@ class EdukasiController extends Controller
     {
 
         $this->validate($request, [
-            'title'         => 'required|max:255|min:15',
-            'desc'          => 'required|max:255|min:15',
-            'street'        => 'required|max:255',
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'street'        => 'required',
             'village'       => 'required',
             'city'          => 'required',
             'prov'          => 'required',
@@ -68,7 +68,7 @@ class EdukasiController extends Controller
 
         $edukasi->save();
 
-        return view ('seller.sellerHome');
+        return view ('products.list.listEdukasi');
     }
 
     /**
@@ -79,7 +79,11 @@ class EdukasiController extends Controller
      */
     public function show($id)
     {
-        //
+        $edukasi = EdukasiModel::find($id);
+        if(!$edukasi){
+            abort(404);
+        }
+        return view('products.view.viewEdukasi')->with('edukasi', $edukasi);
     }
 
     /**
@@ -90,7 +94,11 @@ class EdukasiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $edukasi = EdukasiModel::find($id);
+        if(!$edukasi){
+            abort(404);
+        }
+        return view('products.edit.editEdukasi')->with('edukasi', $edukasi);
     }
 
     /**
@@ -102,7 +110,35 @@ class EdukasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'street'        => 'required',
+            'village'       => 'required',
+            'city'          => 'required',
+            'prov'          => 'required',
+            'zipCode'       => 'required|min:5|max:5',
+            'dateOrdered'   => '',
+            'quota'         => 'required',
+            'price'         => 'required',
+        ]);
+
+        $edukasi = EdukasiModel::find($id);
+        $edukasi->idMerchant = $request->idMerchant;
+        $edukasi->title = $request->title;
+        $edukasi->desc = $request->desc;
+        $edukasi->street = $request->street;
+        $edukasi->village = $request->village;
+        $edukasi->city = $request->city;
+        $edukasi->prov = $request->prov;
+        $edukasi->zipCode = $request->zipCode;
+        $edukasi->dateOrdered = $request->dateOrdered;
+        $edukasi->quota = $request->quota;
+        $edukasi->price = $request->price;
+
+        $edukasi->save();
+
+        return view ('products.list.listEdukasi');
     }
 
     /**

@@ -14,7 +14,7 @@ class CreateProdukVillaTable extends Migration
     {
         Schema::create('produkVilla', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('idMerchant');
+            $table->integer('idMerchant',10)->unsigned();
             $table->string('title');
             $table->string('desc');
             $table->string('street');

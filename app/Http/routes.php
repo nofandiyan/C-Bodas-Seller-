@@ -11,27 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::group(['middleware' => 'web'], function () {
 
     Route::auth();
 
-    Route::get('/', function(){
-		if (!empty(Auth::user())) {
-			if(Auth::user()->userAs == 1){
-				return view ('seller/sellerHome');
-			}else{
-				return view('buyer/buyerHome');
-			}
-		}else{
-			return view('welcome');
-		}
-	});
+ //    Route::get('/', function(){
+	// 	if (!empty(Auth::user())) {
+	// 		if(Auth::user()->userAs == 1){
+	// 			return view ('seller/sellerHome');
+	// 		}else{
+	// 			return view('buyer/buyerHome');
+	// 		}
+	// 	}else{
+	// 		return view('welcome');
+	// 	}
+	// });
 
-    Route::resource('sellerProfile', 'sellerController@index');
+	Route::get('/', 'HomeController@index');
+
+	// Route::get('sellerProfile', 'sellerController');
+
+    // Route::resource('sellerProfile', 'sellerController@index');
+    Route::resource('sellerProfile', 'sellerController');
 
     Route::resource('produkTani', 'TaniController');
 
@@ -45,6 +47,6 @@ Route::group(['middleware' => 'web'], function () {
 
 });
 
-Route::get('userAs', ['middleware'=>['web','auth','userAs'], function(){
-	return view('seller/merchant_home');
-}]);
+// Route::get('userAs', ['middleware'=>['web','auth','userAs'], function(){
+// 	return view('seller/merchant_home');
+// }]);

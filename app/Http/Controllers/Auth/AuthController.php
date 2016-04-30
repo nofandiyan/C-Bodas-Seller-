@@ -52,6 +52,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'profPict' => 'required|image'
         ]);
     }
 
@@ -63,7 +64,9 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // dd($data);
+
+        $user=User::create([
             'userAs'    => $data['userAs'],
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
@@ -79,5 +82,19 @@ class AuthController extends Controller
             'rekName'   => $data['rekName'],
             'rekId'     => $data['rekId'],
         ]);
+        
+        if ($data['profPict']) {
+            $file=$data['profPict'];
+            $destinationPath = 'images/profile/';
+            $uploadSuccess = $file->move(public_path().'/'.$destinationPath,
+                $user->id.'-'.$file->getClientOriginalName());
+
+            $user->profPict = $destinationPath.$user->id.'-'.$file->getClientOriginalName();    
+            // $user->profPict = $destinationPath.$user->id;  
+            // dd($user);
+            $user->save();
+        }
+        
+        return $user;
     }
 }

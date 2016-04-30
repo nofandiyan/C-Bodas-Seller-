@@ -17,8 +17,8 @@ class VillaController extends Controller
      */
     public function index()
     {
-        // $villa = VillaModel::all();
-        // return view ('products.product', ['villa'=>$villa]);
+        $villa = VillaModel::all();
+        return view ('products.list.listVilla', ['villa'=>$villa]);
     }
 
     /**
@@ -28,7 +28,7 @@ class VillaController extends Controller
      */
     public function create()
     {
-        return view ('products.createVilla');
+        return view ('products.create.createVilla');
     }
 
     /**
@@ -41,9 +41,9 @@ class VillaController extends Controller
     {
 
         $this->validate($request, [
-            'title'         => 'max:255|min:15',
-            'desc'          => 'required|max:255|min:15',
-            'street'        => 'required|max:255',
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'street'        => 'required',
             'village'       => 'required',
             'city'          => 'required',
             'prov'          => 'required',
@@ -66,7 +66,7 @@ class VillaController extends Controller
 
         $villa->save();
 
-        return view ('seller.sellerHome');
+        return view ('products.list.listVilla');
     }
 
     /**
@@ -77,7 +77,11 @@ class VillaController extends Controller
      */
     public function show($id)
     {
-        //
+        $villa = VillaModel::find($id);
+        if(!$villa){
+            abort(404);
+        }
+        return view('products.view.viewVilla')->with('villa', $villa);
     }
 
     /**
@@ -88,7 +92,11 @@ class VillaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $villa = VillaModel::find($id);
+        if(!$villa){
+            abort(404);
+        }
+        return view('products.edit.editVilla')->with('villa', $villa);
     }
 
     /**
@@ -100,7 +108,33 @@ class VillaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title'     => 'required|max:255|min:5',
+            'desc'      => 'required|max:255|min:5',
+            'street'        => 'required',
+            'village'       => 'required',
+            'city'          => 'required',
+            'prov'          => 'required',
+            'zipCode'       => 'required|min:5|max:5',
+            'dateOrdered'   => 'required',
+            'price'         => 'required',
+        ]);
+
+        $villa = VillaModel::find($id);
+        $villa->idMerchant = $request->idMerchant;
+        $villa->title = $request->title;
+        $villa->desc = $request->desc;
+        $villa->street = $request->street;
+        $villa->village = $request->village;
+        $villa->city = $request->city;
+        $villa->prov = $request->prov;
+        $villa->zipCode = $request->zipCode;
+        $villa->dateOrdered = $request->dateOrdered;
+        $villa->price = $request->price;
+
+        $villa->save();
+
+        return view ('products.list.listVilla');
     }
 
     /**
