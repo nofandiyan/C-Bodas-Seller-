@@ -21,11 +21,12 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}" enctype="multipart/form-data">
                         
                         {!! csrf_field() !!}
+                        
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                        <div class="form-group">
-
-                            <input type="file" name="profPict" id="profPict">
+                        <div class="form-group">                            
+                            
+                            
 
                             <div class="col-md-6 col-md-offset-3">
                                 <!-- <select class="form-control" name="userAs" id="userAs" onchange="changeFunc();"> -->
@@ -45,8 +46,22 @@
                         <div> -->
                             <label class="col-md-10 col-md-offset-2">Informasi Akun</label>
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('profPict') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-3">
+                                    <label>Foto Profil</label>
+                                    <input type="file" name="profPict" id="profPict">
+                                    
+                                    *maksimum 1MB
 
+                                    @if ($errors->has('profPict'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('profPict') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                  <div class="col-md-6 col-md-offset-3">
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Alamat E-Mail">
 
@@ -227,10 +242,19 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-8 col-md-offset-2">
+                                <div class="col-md-1">
+                                    <input type="checkbox" id="myCheck" name="test" required>     
+                                </div>
+                                <div class="col-md-offset-1" align="justify">
+                                    Data tersebut saya isi dengan jujur dan apa adanya, apabila terdapat kesalahan pada saat pengisian formulir adalah murni dari kesalahan saya dan pihak C-Bodas tidak ikut menanggung kesalahan yang telah saya perbuat.
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-6 col-md-offset-3" align="center">
                                 <button type="submit" class="btn btn-primary" name="submit" value="Register">
                                     <i class="fa fa-btn fa-user"></i>Daftar
                                 </button>

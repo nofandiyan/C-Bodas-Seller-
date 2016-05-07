@@ -14,7 +14,8 @@ class CreateProdukWisataTable extends Migration
     {
         Schema::create('produkWisata', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idMerchant',10)->unsigned();
+            $table->integer('idMerchant')->unsigned();;
+            $table->foreign('idMerchant')->references('id')->on('users');
             $table->string('title');
             $table->string('desc');
             $table->string('street');

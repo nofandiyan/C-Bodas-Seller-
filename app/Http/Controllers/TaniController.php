@@ -53,13 +53,17 @@ public function __construct()
             'massStock' => 'required',
             'price'     => 'required',
             'massSell'  => 'required',
+            'fotoTani1' => 'required|image|mimes:jpeg,png|max:1048576'
+            // 'fotoTani2' => 'required|image',
+            // 'fotoTani3' => 'required|image',
+            // 'fotoTani4' => 'required|image',
         ]);
         // dd($validator->errors());
-         if ($validator->fails()) {
-            return redirect('produkTani/create')
-                        ->withErrors($validator->errors())
-                        ->withInput($request->all());
-        }
+        //  if ($validator->fails()) {
+        //     return redirect('produkTani/create')
+        //                 ->withErrors($validator->errors())
+        //                 ->withInput($request->all());
+        // }
 
         $tani = new TaniModel;
         $tani->idMerchant = $request->idMerchant;
@@ -69,10 +73,20 @@ public function __construct()
         $tani->massStock = $request->massStock;
         $tani->price = $request->price;
         $tani->massSell = $request->massSell;
+        
+        if ($tani['fotoTani1']) {
+            $file=$tani['fotoTani1'];
+            $destinationPath = 'images/produkTani/';
+            $uploadSuccess = $file->move(public_path().'/'.$destinationPath,
+                $tani->id.'-'.$file->getClientOriginalName());
 
-        $tani->save();
-
-        return redirect('/');
+            $tani->fotoTani1 = $destinationPath.$tani->id.'-'.$file->getClientOriginalName();    
+        }        
+        
+        // $tani->save();
+        // return redirect('/');
+        // echo "<pre>";
+        var_dump($tani->fotoTani1);
     }
 
     /**

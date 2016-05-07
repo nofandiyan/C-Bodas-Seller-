@@ -31,7 +31,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        
         if(Auth::user()->userAs == 1){
             $profiles   = User::where('id',Auth::user()->id)->get();
             $tanis      = TaniModel::where('idMerchant',Auth::user()->id)->get();
@@ -41,13 +41,10 @@ class HomeController extends Controller
             $edukasis   = EdukasiModel::where('idMerchant',Auth::user()->id)->get();
             return view ('seller/sellerHome', compact('profiles','tanis','ternaks','wisatas','villas','edukasis'));
             // return view ('seller/sellerHome', compact('ternaks'));
-        }elseif(Auth::user()->userAs == 2){
+        }elseif(Auth::user()->userAs == 0){
             return view('buyer/buyerHome');
-        }else{
-            return view('welcome');
         }
 
-        
     }
 
 

@@ -4,31 +4,6 @@
 
 <script type="text/javascript">
 
-   // function changeFunc() {
-   //  // var userAs = document.getElementById("userAs");
-   //  // var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-   //  var x = document.getElementById("massAvailable").value;
-   //  document.getElementById("showValue").innerHTML = x;
-   // }
-
-// $(document).ready(function(){
-//     $(".gender").change(function(){
-//         $(this).find("option:selected").each(function(){
-//             if($(this).attr("value")=="M"){
-//                 $(".box").not(".M").hide();
-//                 $(".male").show();
-//             }
-//             else if($(this).attr("value")=="F"){
-//                 $(".box").not(".F").hide();
-//                 $(".female").show();
-//             }
-//             else{
-//                 $(".box").hide();
-//             }
-//         });
-//     }).change();
-// });
-
 </script> 
 @if (!empty(Auth::user()))
     @if(Auth::user()->userAs == 1)
@@ -38,7 +13,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkTani') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkTani') }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -73,7 +48,21 @@
                                 @endif
                             </div>
                         </div>
-<!-- Tani -->
+<!-- Tani -->           
+                        <label class="col-md-4 control-label">Foto Produk</label>
+                            
+                            <div class="form-group{{ $errors->has('fotoTani1') ? ' has-error' : '' }}">
+                                    <input type="file" name="fotoTani1" id="fotoTani1">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani1'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani1') }}</strong>
+                                        </span>
+                                    @endif
+                            </div>
+
                         <div class="col-md-9 col-md-offset-1">
                             <div class="form-group{{ $errors->has('stock') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Stok Tersedia</label>
