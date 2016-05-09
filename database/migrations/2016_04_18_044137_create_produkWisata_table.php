@@ -25,6 +25,10 @@ class CreateProdukWisataTable extends Migration
             $table->string('zipCode');
             $table->string('ticketStock');
             $table->string('price');
+            $table->string('fotoWisata1');
+            $table->string('fotoWisata2');
+            $table->string('fotoWisata3');
+            $table->string('fotoWisata4');
             $table->rememberToken();
             $table->timestamps();
         });

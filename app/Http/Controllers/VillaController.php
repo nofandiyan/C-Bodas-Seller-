@@ -8,6 +8,10 @@ use App\Http\Requests;
 
 use App\VillaModel;
 
+use DB;
+
+use App\Quotation;
+
 class VillaController extends Controller
 {
     /**
@@ -41,15 +45,20 @@ class VillaController extends Controller
     {
 
         $this->validate($request, [
-            'title'     => 'required|max:255|min:5',
-            'desc'      => 'required|max:255|min:5',
+            'title'         => 'required|max:255|min:5',
+            'desc'          => 'required|max:255|min:5',
             'street'        => 'required',
             'village'       => 'required',
             'city'          => 'required',
             'prov'          => 'required',
             'zipCode'       => 'required|min:5|max:5',
             'dateOrdered'   => 'required',
+            'quota'         => 'required',
             'price'         => 'required',
+            'fotoVilla1'    => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoVilla2'    => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoVilla3'    => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoVilla4'    => 'required|image|mimes:jpeg,png|max:1048576'
         ]);
 
         $villa = new VillaModel;
@@ -62,11 +71,34 @@ class VillaController extends Controller
         $villa->prov = $request->prov;
         $villa->zipCode = $request->zipCode;
         $villa->dateOrdered = $request->dateOrdered;
+        $villa->quota = $request->quota;
         $villa->price = $request->price;
+
+        $files = [];
+        if ($request->file('fotoVilla1')) $files[] = $request->file('fotoVilla1');
+        if ($request->file('fotoVilla2')) $files[] = $request->file('fotoVilla2');
+        if ($request->file('fotoVilla3')) $files[] = $request->file('fotoVilla3');
+        if ($request->file('fotoVilla4')) $files[] = $request->file('fotoVilla4');
+        
+        $i = 1;
+        $currentId = DB::table('produkVilla')->max('id') + 1;
+
+        foreach ($files as $file)
+        {
+            if(!empty($file)){
+                $filename=$villa->idMerchant.'-'.$currentId.'-fotoVilla'.$i.'-'.$file->getClientOriginalName();
+                
+                $file->move(base_path().'/public/images/produkVilla/', $filename);
+                
+                $var = "fotoVilla".$i;
+                $villa->$var = 'images/produkVilla/'.$filename;
+            }
+            $i++;
+        }
 
         $villa->save();
 
-        return view ('products.list.listVilla');
+        return redirect ('/');
     }
 
     /**
@@ -117,6 +149,7 @@ class VillaController extends Controller
             'prov'          => 'required',
             'zipCode'       => 'required|min:5|max:5',
             'dateOrdered'   => 'required',
+            'quota'         => 'required',
             'price'         => 'required',
         ]);
 
@@ -130,11 +163,12 @@ class VillaController extends Controller
         $villa->prov = $request->prov;
         $villa->zipCode = $request->zipCode;
         $villa->dateOrdered = $request->dateOrdered;
+        $villa->quota = $request->quota;
         $villa->price = $request->price;
 
         $villa->save();
 
-        return view ('products.list.listVilla');
+        return redirect ('/');
     }
 
     /**

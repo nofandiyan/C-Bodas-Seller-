@@ -2,35 +2,6 @@
 
 @section('content')
 
-<script type="text/javascript">
-
-   // function changeFunc() {
-   //  // var userAs = document.getElementById("userAs");
-   //  // var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-   //  var x = document.getElementById("massAvailable").value;
-   //  document.getElementById("showValue").innerHTML = x;
-   // }
-
-// $(document).ready(function(){
-//     $(".gender").change(function(){
-//         $(this).find("option:selected").each(function(){
-//             if($(this).attr("value")=="M"){
-//                 $(".box").not(".M").hide();
-//                 $(".male").show();
-//             }
-//             else if($(this).attr("value")=="F"){
-//                 $(".box").not(".F").hide();
-//                 $(".female").show();
-//             }
-//             else{
-//                 $(".box").hide();
-//             }
-//         });
-//     }).change();
-// });
-
-</script> 
-
 @if (!empty(Auth::user()))
     @if(Auth::user()->userAs == 1)
                 
@@ -41,7 +12,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkVilla') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkVilla') }}  " enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -76,6 +47,65 @@
                                 @endif
                             </div>
                         </div>
+
+                        <label class="col-md-4 control-label">Foto Edukasi</label>
+                            
+                        <!-- <div> -->
+                            <div class="form-group{{ $errors->has('fotoVilla1') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoVilla1" id="fotoVilla1">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoVilla1'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoVilla1') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoVilla2') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoVilla2" id="fotoVilla2">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoVilla2'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoVilla2') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoVilla3') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoVilla3" id="fotoVilla3">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoVilla3'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoVilla3') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoVilla4') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoVilla4" id="fotoVilla4">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoVilla4'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoVilla4') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 <!-- Villa -->
                         <div class="col-md-9 col-md-offset-1">
                             <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
@@ -143,6 +173,23 @@
 
                             </div>
 
+                            <div class="form-group{{ $errors->has('quota') ? ' has-error' : '' }}">
+                                <label class="col-md-4 control-label">Kapasitas</label>
+
+                                <div class="col-md-6">
+                                    <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
+                                    <input type="number" class="form-control" name="quota" step="5" min="0">
+
+                                    @if ($errors->has('quota'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('quota') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <label class="control-label">Orang</label>
+                            </div>
+
                             <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Harga</label>
 
@@ -150,7 +197,7 @@
                                     <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
                                     <input type="number" class="form-control" name="price" step="50" min="0">
 
-                                    @if ($errors->has('stock'))
+                                    @if ($errors->has('price'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('price') }}</strong>
                                         </span>

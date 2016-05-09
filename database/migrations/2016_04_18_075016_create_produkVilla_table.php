@@ -24,7 +24,12 @@ class CreateProdukVillaTable extends Migration
             $table->string('prov');
             $table->string('zipCode');
             $table->string('dateOrdered');
+            $table->string('quota');
             $table->string('price');
+            $table->string('fotoVilla1');
+            $table->string('fotoVilla2');
+            $table->string('fotoVilla3');
+            $table->string('fotoVilla4');
             $table->rememberToken();
             $table->timestamps();
         });

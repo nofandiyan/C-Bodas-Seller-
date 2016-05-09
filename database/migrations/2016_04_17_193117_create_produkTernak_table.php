@@ -24,6 +24,10 @@ class CreateProdukTernakTable extends Migration
             $table->string('gender');
             $table->string('weight');
             $table->string('price');
+            $table->string('fotoTernak1');
+            $table->string('fotoTernak2');
+            $table->string('fotoTernak3');
+            $table->string('fotoTernak4');
             $table->rememberToken();
             $table->timestamps();
         });

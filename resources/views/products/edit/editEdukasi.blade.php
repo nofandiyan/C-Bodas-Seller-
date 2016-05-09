@@ -2,34 +2,6 @@
 
 @section('content')
 
-<script type="text/javascript">
-
-   // function changeFunc() {
-   //  // var userAs = document.getElementById("userAs");
-   //  // var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-   //  var x = document.getElementById("massAvailable").value;
-   //  document.getElementById("showValue").innerHTML = x;
-   // }
-
-// $(document).ready(function(){
-//     $(".gender").change(function(){
-//         $(this).find("option:selected").each(function(){
-//             if($(this).attr("value")=="M"){
-//                 $(".box").not(".M").hide();
-//                 $(".male").show();
-//             }
-//             else if($(this).attr("value")=="F"){
-//                 $(".box").not(".F").hide();
-//                 $(".female").show();
-//             }
-//             else{
-//                 $(".box").hide();
-//             }
-//         });
-//     }).change();
-// });
-
-</script> 
 @if (!empty(Auth::user()))
     @if(Auth::user()->userAs == 1)
                 
@@ -49,7 +21,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="/produkEdukasi/{{$edukasi->id}}">
+                    <form class="form-horizontal" role="form" method="POST" action="/produkEdukasi/{{$edukasi->id}}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -84,6 +56,77 @@
                                 @endif
                             </div>
                         </div>
+
+                        <label class="col-md-4 control-label">Foto Edukasi</label>
+                            
+                        <!-- <div> -->
+                            <div class="form-group{{ $errors->has('fotoEdukasi1') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($edukasi->fotoEdukasi1) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 1
+                                    <input type="file" name="fotoEdukasi1" id="fotoEdukasi1" value="{{ $edukasi->fotoEdukasi1 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoEdukasi1'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoEdukasi1') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoEdukasi2') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                 <img src="{{ url($edukasi->fotoEdukasi2) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 2
+                                    <input type="file" name="fotoEdukasi2" id="fotoEdukasi2" value="{{ $edukasi->fotoEdukasi2 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoEdukasi2'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoEdukasi2') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoEdukasi3') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($edukasi->fotoEdukasi3) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 3
+                                    <input type="file" name="fotoEdukasi3" id="fotoEdukasi3" value="{{ $edukasi->fotoEdukasi3 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoEdukasi3'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoEdukasi3') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoEdukasi4') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($edukasi->fotoEdukasi4) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 4
+                                    <input type="file" name="fotoEdukasi4" id="fotoEdukasi4" value="{{ $edukasi->fotoEdukasi4 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoEdukasi4'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoEdukasi4') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 <!-- Edukasi -->
                         <div class="col-md-9 col-md-offset-1">
 

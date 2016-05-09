@@ -2,34 +2,6 @@
 
 @section('content')
 
-<script type="text/javascript">
-
-   // function changeFunc() {
-   //  // var userAs = document.getElementById("userAs");
-   //  // var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-   //  var x = document.getElementById("massAvailable").value;
-   //  document.getElementById("showValue").innerHTML = x;
-   // }
-
-// $(document).ready(function(){
-//     $(".gender").change(function(){
-//         $(this).find("option:selected").each(function(){
-//             if($(this).attr("value")=="M"){
-//                 $(".box").not(".M").hide();
-//                 $(".male").show();
-//             }
-//             else if($(this).attr("value")=="F"){
-//                 $(".box").not(".F").hide();
-//                 $(".female").show();
-//             }
-//             else{
-//                 $(".box").hide();
-//             }
-//         });
-//     }).change();
-// });
-
-</script> 
 @if (!empty(Auth::user()))
     @if(Auth::user()->userAs == 1)
                 
@@ -40,7 +12,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkTernak') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/produkTernak') }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -75,13 +47,72 @@
                                 @endif
                             </div>
                         </div>
+
+                        <label class="col-md-4 control-label">Foto Ternak</label>
+                            
+                        <!-- <div> -->
+                            <div class="form-group{{ $errors->has('fotoTernak1') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTernak1" id="fotoTernak1">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTernak1'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTernak1') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTernak2') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTernak2" id="fotoTernak2">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTernak2'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTernak2') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTernak3') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTernak3" id="fotoTernak3">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTernak3'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTernak3') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTernak4') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTernak4" id="fotoTernak4">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTernak4'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTernak4') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
 <!-- Ternak -->
                         <div class="col-md-9 col-md-offset-1">
                             <div class="form-group{{ $errors->has('age') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Usia</label>
 
                                 <div class="col-md-2">
-                                    <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
                                     <input type="number" class="form-control" name="year" step="1" placeholder="Tahun" min="0">
 
                                     @if ($errors->has('year'))
@@ -92,7 +123,6 @@
                                 </div>
                                 
                                 <div class="col-md-2">
-                                    <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
                                     <input type="number" class="form-control" name="month" step="1" placeholder="Bulan" min="0">
 
                                     @if ($errors->has('month'))
@@ -103,7 +133,6 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
                                     <input type="number" class="form-control" name="day" step="1" placeholder="Hari" min="0">
 
                                     @if ($errors->has('day'))

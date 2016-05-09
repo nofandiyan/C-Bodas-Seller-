@@ -169,6 +169,23 @@
 
                             </div>
 
+                            <div class="form-group{{ $errors->has('quota') ? ' has-error' : '' }}">
+                                <label class="col-md-4 control-label">Kapasitas</label>
+
+                                <div class="col-md-6">
+                                    <!-- <textarea class="form-control" name="desc" value="{{ old('desc') }}"> -->
+                                    <input type="number" class="form-control" name="quota" step="5" min="0" value="{{ $villa->quota }}">
+
+                                    @if ($errors->has('quota'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('quota') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <label class="control-label">Orang</label>
+                            </div>
+
                             <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Harga</label>
 

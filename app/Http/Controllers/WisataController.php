@@ -8,6 +8,10 @@ use App\Http\Requests;
 
 use App\WisataModel;
 
+use DB;
+
+use App\Quotation;
+
 class WisataController extends Controller
 {
     /**
@@ -50,6 +54,10 @@ class WisataController extends Controller
             'zipCode'       => 'required|min:5|max:5',
             'ticketStock'   => 'required|min:1',
             'price'         => 'required',
+            'fotoWisata1'    => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoWisata2'    => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoWisata3'    => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoWisata4'    => 'required|image|mimes:jpeg,png|max:1048576'
         ]);
 
         $wisata = new WisataModel;
@@ -64,9 +72,31 @@ class WisataController extends Controller
         $wisata->ticketStock = $request->ticketStock;
         $wisata->price = $request->price;
 
+        $files = [];
+        if ($request->file('fotoWisata1')) $files[] = $request->file('fotoWisata1');
+        if ($request->file('fotoWisata2')) $files[] = $request->file('fotoWisata2');
+        if ($request->file('fotoWisata3')) $files[] = $request->file('fotoWisata3');
+        if ($request->file('fotoWisata4')) $files[] = $request->file('fotoWisata4');
+        
+        $i = 1;
+        $currentId = DB::table('produkWisata')->max('id') + 1;
+
+        foreach ($files as $file)
+        {
+            if(!empty($file)){
+                $filename=$wisata->idMerchant.'-'.$currentId.'-fotoWisata'.$i.'-'.$file->getClientOriginalName();
+                
+                $file->move(base_path().'/public/images/produkWisata/', $filename);
+                
+                $var = "fotoWisata".$i;
+                $wisata->$var = 'images/produkWisata/'.$filename;
+            }
+            $i++;
+        }
+
         $wisata->save();
 
-        return view ('products.list.listWisata');
+        return redirect ('/');
     }
 
     /**
@@ -134,7 +164,7 @@ class WisataController extends Controller
 
         $wisata->save();
 
-        return view ('products.list.listWisata');
+        return redirect ('/');
     }
 
     /**

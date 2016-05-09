@@ -2,34 +2,6 @@
 
 @section('content')
 
-<script type="text/javascript">
-
-   // function changeFunc() {
-   //  // var userAs = document.getElementById("userAs");
-   //  // var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-   //  var x = document.getElementById("massAvailable").value;
-   //  document.getElementById("showValue").innerHTML = x;
-   // }
-
-// $(document).ready(function(){
-//     $(".gender").change(function(){
-//         $(this).find("option:selected").each(function(){
-//             if($(this).attr("value")=="M"){
-//                 $(".box").not(".M").hide();
-//                 $(".male").show();
-//             }
-//             else if($(this).attr("value")=="F"){
-//                 $(".box").not(".F").hide();
-//                 $(".female").show();
-//             }
-//             else{
-//                 $(".box").hide();
-//             }
-//         });
-//     }).change();
-// });
-
-</script> 
 @if (!empty(Auth::user()))
     @if(Auth::user()->userAs == 1)
                 
@@ -40,7 +12,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Lapak Baru</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="/produkTani/{{$tani->id}}">
+                    <form class="form-horizontal" role="form" method="POST" action="/produkTani/{{$tani->id}}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -76,6 +48,76 @@
                             </div>
                         </div>
 <!-- Tani -->
+                        <label class="col-md-4 control-label">Foto Produk</label>
+                            
+                            <div class="form-group{{ $errors->has('fotoTani1') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($tani->fotoTani1) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 1
+                                    <input type="file" name="fotoTani1" id="fotoTani1" value="{{ $tani->fotoTani1 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani1'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani1') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTani2') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($tani->fotoTani2) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 2
+                                    <input type="file" name="fotoTani2" id="fotoTani2" value="{{ $tani->fotoTani2 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani2'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani2') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTani3') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($tani->fotoTani3) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 3
+                                    <input type="file" name="fotoTani3" id="fotoTani3" value="{{ $tani->fotoTani3 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani3'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani3') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTani4') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <img src="{{ url($tani->fotoTani4) }}" class="img-thumbnail" height="300" width="300" >
+                                    <br>
+                                    Ubah Foto 4
+                                    <input type="file" name="fotoTani4" id="fotoTani4" value="{{ $tani->fotoTani4 }}">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani4'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani4') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
                         <div class="col-md-9 col-md-offset-1">
                             <div class="form-group{{ $errors->has('stock') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Stok Tersedia</label>

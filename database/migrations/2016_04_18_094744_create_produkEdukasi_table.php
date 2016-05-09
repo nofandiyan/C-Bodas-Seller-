@@ -26,6 +26,10 @@ class CreateProdukEdukasiTable extends Migration
             $table->string('dateOrdered');
             $table->string('quota');
             $table->string('price');
+            $table->string('fotoEdukasi1');
+            $table->string('fotoEdukasi2');
+            $table->string('fotoEdukasi3');
+            $table->string('fotoEdukasi4');
             $table->rememberToken();
             $table->timestamps();
         });

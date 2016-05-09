@@ -32,6 +32,51 @@
             margin-right: 6px;
         }
     </style>
+    
+    <style type="text/css">
+        .wrapper {
+            width: 700px;
+            position: relative;
+        }
+        .wrapper .thumbnails {
+            width: 150px;
+            float: left;
+            top: 0;
+            left: 0;
+        }
+        .wrapper a {
+            margin: 2px;
+        }
+        .wrapper img {
+            border: 1px solid #000;
+        }
+        .wrapper label > img {
+            opacity: 0.6;
+        }
+        .wrapper label > img:hover {
+            opacity: 1;
+        }
+        .wrapper input {
+            display: none;
+        }
+        .wrapper input:checked + .full-image {
+            display: block;
+        }
+        .wrapper input:checked ~ img {
+            opacity: 1;
+        }
+        .wrapper .full-image {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 125px;
+        }
+        .wrapper .description {
+            width:95%;
+            padding:5px;
+            background-color:#DDDDDD;
+        }
+    </style>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">

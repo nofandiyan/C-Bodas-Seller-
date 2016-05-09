@@ -10,6 +10,10 @@ use App\TaniModel;
 
 use Validator;
 
+use DB;
+
+use App\Quotation;
+
 class TaniController extends Controller
 {
 public function __construct()
@@ -53,17 +57,12 @@ public function __construct()
             'massStock' => 'required',
             'price'     => 'required',
             'massSell'  => 'required',
-            'fotoTani1' => 'required|image|mimes:jpeg,png|max:1048576'
-            // 'fotoTani2' => 'required|image',
-            // 'fotoTani3' => 'required|image',
-            // 'fotoTani4' => 'required|image',
+            'fotoTani1' => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoTani2' => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoTani3' => 'required|image|mimes:jpeg,png|max:1048576',
+            'fotoTani4' => 'required|image|mimes:jpeg,png|max:1048576'
         ]);
-        // dd($validator->errors());
-        //  if ($validator->fails()) {
-        //     return redirect('produkTani/create')
-        //                 ->withErrors($validator->errors())
-        //                 ->withInput($request->all());
-        // }
+
 
         $tani = new TaniModel;
         $tani->idMerchant = $request->idMerchant;
@@ -74,19 +73,34 @@ public function __construct()
         $tani->price = $request->price;
         $tani->massSell = $request->massSell;
         
-        if ($tani['fotoTani1']) {
-            $file=$tani['fotoTani1'];
-            $destinationPath = 'images/produkTani/';
-            $uploadSuccess = $file->move(public_path().'/'.$destinationPath,
-                $tani->id.'-'.$file->getClientOriginalName());
-
-            $tani->fotoTani1 = $destinationPath.$tani->id.'-'.$file->getClientOriginalName();    
-        }        
+        $files =[];
+        if ($request->file('fotoTani1')) $files[] = $request->file('fotoTani1');
+        if ($request->file('fotoTani2')) $files[] = $request->file('fotoTani2');
+        if ($request->file('fotoTani3')) $files[] = $request->file('fotoTani3');
+        if ($request->file('fotoTani4')) $files[] = $request->file('fotoTani4');
         
-        // $tani->save();
-        // return redirect('/');
-        // echo "<pre>";
-        var_dump($tani->fotoTani1);
+        $i = 1;
+        $currentId = DB::table('produkTani')->max('id') + 1;
+
+        foreach ($files as $file)
+        {
+            if(!empty($file)){
+                $filename=$tani->idMerchant.'-'.$currentId.'-fotoTani'.$i.'-'.$file->getClientOriginalName();
+                
+                $file->move(base_path().'/public/images/produkTani/', $filename);
+                
+                $var = "fotoTani".$i;
+                $tani->$var = 'images/produkTani/'.$filename;
+            }
+            $i++;
+        }
+
+        // print_r($currentId);
+        // var_dump($currentId);
+
+        $tani->save();
+        return redirect('/');
+        
     }
 
     /**
@@ -145,6 +159,41 @@ public function __construct()
         $tani->massStock = $request->massStock;
         $tani->price = $request->price;
         $tani->massSell = $request->massSell;
+
+        $files = [];
+        if ($request->file('fotoTani1')) $files[] = $request->file('fotoTani1');
+        if ($request->file('fotoTani2')) $files[] = $request->file('fotoTani2');
+        if ($request->file('fotoTani3')) $files[] = $request->file('fotoTani3');
+        if ($request->file('fotoTani4')) $files[] = $request->file('fotoTani4');
+
+        foreach ($files as $file)
+        {
+            if ($request->hasFile('fotoTani1')) {
+                $filename=$tani->idMerchant.'-'.$tani->id.'-fotoTani1'.'-'.$file->getClientOriginalName();
+                    
+                $file->move(base_path().'/public/images/produkTani/', $filename);
+                
+                $tani->fotoTani1 = 'images/produkTani/'.$filename;
+            }elseif ($request->hasFile('fotoTani2')) {
+                $filename=$tani->idMerchant.'-'.$tani->id.'-fotoTani2'.'-'.$file->getClientOriginalName();
+                    
+                $file->move(base_path().'/public/images/produkTani/', $filename);
+                
+                $tani->fotoTani2 = 'images/produkTani/'.$filename;
+            }elseif ($request->hasFile('fotoTani3')) {
+                $filename=$tani->idMerchant.'-'.$tani->id.'-fotoTani3'.'-'.$file->getClientOriginalName();
+                    
+                $file->move(base_path().'/public/images/produkTani/', $filename);
+                
+                $tani->fotoTani3 = 'images/produkTani/'.$filename;
+            }elseif ($request->hasFile('fotoTani4')) {
+                $filename=$tani->idMerchant.'-'.$tani->id.'-fotoTani4'.'-'.$file->getClientOriginalName();
+                    
+                $file->move(base_path().'/public/images/produkTani/', $filename);
+                
+                $tani->fotoTani4 = 'images/produkTani/'.$filename;
+            }
+        }
 
         $tani->save();
 

@@ -52,6 +52,7 @@
                         <label class="col-md-4 control-label">Foto Produk</label>
                             
                             <div class="form-group{{ $errors->has('fotoTani1') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
                                     <input type="file" name="fotoTani1" id="fotoTani1">
                                     
                                     *maksimum 1MB
@@ -61,6 +62,49 @@
                                             <strong>{{ $errors->first('fotoTani1') }}</strong>
                                         </span>
                                     @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTani2') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTani2" id="fotoTani2">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani2'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani2') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTani3') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTani3" id="fotoTani3">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani3'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani3') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('fotoTani4') ? ' has-error' : '' }}">
+                                 <div class="col-md-6 col-md-offset-4">
+                                    <input type="file" name="fotoTani4" id="fotoTani4">
+                                    
+                                    *maksimum 1MB
+
+                                    @if ($errors->has('fotoTani4'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('fotoTani4') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
 
                         <div class="col-md-9 col-md-offset-1">

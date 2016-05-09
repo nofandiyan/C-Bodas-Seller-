@@ -25,7 +25,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="col-md-4" align="center">
-                                <img src="{{ url(Auth::user()->profPict) }}" class="img-thumbnail" height="100" width="200" ">
+                                <img src="{{ url(Auth::user()->profPict) }}" class="img-thumbnail" height="250" width="250">
                                 <br>
                                 <a href="/sellerProfile/{{Auth::user()->id}}" class="btn btn-info" role="button">Edit Profil</a>
                                 <!-- <button type="submit" class="btn btn-primary" name="submit" value="">
